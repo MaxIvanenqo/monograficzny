@@ -1,1 +1,36 @@
-/* You can add global styles to this file, and also import other style files */
+body{
+  padding: 8px;
+  padding: .5rem;
+}
+.pow{
+  position: relative;
+  top: -10px;
+  left: -5px;
+  font-size: 10px;
+}
+
+.bottom-prefix{
+  position:relative;
+  bottom: -8px;
+  left: 0;
+  font-size: 10px;
+}
+
+.mean{
+  position: relative;
+}
+
+.mean::after{
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 10px;
+  background: #000;
+  height: 1px;
+}
+
+.figcaption-inline{
+  display: inline;
+}

@@ -1,0 +1,93 @@
+<div class="jumbotron">
+  <h1>Test Diksona</h1>
+  <section id="form-controller--container">
+    <form [formGroup]="alphaController">
+      <div class="form-group">
+          <label for="aplha"><strong>Alpha</strong></label>
+          <select
+          (change)="reSetAlpha()"
+          [(ngModel)]="_alphaConst"
+          formControlName="alphaVal"
+          type="text"
+          id="alpha"
+          class="form-control"
+          id="alpha">
+        <option value="0.90">0.90</option>
+        <option value="0.95">0.95</option>
+        <option value="0.99">0.99</option>
+      </select>
+      </div>
+    </form>
+    <button 
+      *ngIf="!this.isFormVisible"
+      (click)="this.isFormVisible = !isFormVisible" 
+      class="btn btn-primary">Zmień dane</button>
+    <button 
+      (click)="this.destroyData()" 
+      class="btn btn-warning">Wyczyść dane</button>
+  </section>
+  <section *ngIf="this.isFormVisible">
+    <form [formGroup]="form">
+      <div class="form-group">
+          
+          <label for="data"><strong>Data</strong></label>
+          <textarea
+              [(ngModel)]="_data"
+              formControlName="data"
+              id="data"
+              type="text"
+              placeholder="2.1, 5.3, 1.8..."
+              class="form-control"></textarea>
+      </div>
+      <button 
+      (keyUp.enter)="setData()"
+      (click)="setData()" 
+      class="btn btn-success" type="submit">Ok</button>
+    </form>
+  </section>
+  <section *ngIf="this.data">
+    <section id="data--group">
+      <div id="sorted-data--container">
+        <span *ngFor="let d of data; let i = index"  id="sorted-data">{{d}}, </span>
+      </div>
+    </section>
+  </section>
+  <section>
+   <table class="table w-auto was-validated">
+     <tbody>
+       <tr *ngFor="let item of q">
+         <td>{{item.q}}</td>
+         <td>{{item.val.toFixed(2)}} &lt; {{this.compareTo}}</td>
+       </tr>
+     </tbody>
+   </table>
+  </section>
+
+  <section>
+    <table class="table w-auto">
+      <thead>
+        <th>
+          <span>n</span>
+        </th>
+        <th *ngFor="let a of alpha">
+          <span>{{a}}</span>
+        </th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of dixonStandard" [className]="row.n === _N ? 'highlighted':''" >
+          <td>{{row.n}}</td>
+          <td [className]="pairValue.alpha == _alphaConst ? 'highlighted':''" *ngFor="let pairValue of row.pair">
+            <span [className]="pairValue.alpha == _alphaConst && row.n === _N ? 'cross':''" >{{pairValue.val}}</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+  <section *ngIf="calculated">
+    <h4>Hipoteza:</h4>
+    <p *ngIf="isMonolitic" class="alert alert-success" >Nie ma odstających w zbiorze danych</p>
+    <p *ngIf="!isMonolitic" class="alert alert-warning">Istnieje przynajmniej jeden odstający w zbiorze danych</p>
+  </section>
+
+
+</div>

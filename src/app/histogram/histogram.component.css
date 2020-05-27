@@ -1,0 +1,35 @@
+#form-controller--container{
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+}
+#form-controller--container>.btn-primary{
+  margin-right: .5rem;
+}
+#data-calculated-info--container{
+  display: flex;
+  flex-direction: row;
+  min-width: 5rem;
+}
+#data-calculated-info--container span{
+  display: block;
+}
+#data--group{
+  background-color: #fff;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 3rem;
+  padding: .5rem;
+}
+#sorted-data--container{
+  flex-grow: 2;
+  padding-left: 1rem;
+  margin-left: 2rem;
+}
+
+#sorted-data{
+  word-break: break-all;
+}
+
+

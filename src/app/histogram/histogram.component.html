@@ -1,0 +1,73 @@
+<div class="jumbotron">
+  <section id="form-controller--container">
+    <button 
+      *ngIf="!this.isFormVisible"
+      (click)="this.isFormVisible = !isFormVisible" 
+      class="btn btn-primary">Zmień dane</button>
+    <button 
+      (click)="this.destroyData()" 
+      class="btn btn-warning">Wyczyść dane</button>
+  </section>
+  <section *ngIf="this.isFormVisible">
+    <form [formGroup]="form">
+      <div class="form-group">
+          <label for="data"><strong>Data</strong></label>
+          <textarea
+              [(ngModel)]="_data"
+              formControlName="data"
+              id="data"
+              type="text"
+              placeholder="2.1, 5.3, 1.8..."
+              class="form-control"></textarea>
+      </div>
+      <button 
+      (keyUp.enter)="setData()"
+      (click)="setData()" 
+      class="btn btn-success" type="submit">Ok</button>
+    </form>
+  </section>
+  <section *ngIf="this.data">
+    <section id="data--group">
+      <div id="sorted-data--container">
+        <span id="sorted-data">{{data}}</span>
+      </div>
+    </section>
+    <section>
+      <div>
+        Ilość elementów w próbie<strong>N</strong> = {{this.N}}
+      </div>
+      <div>
+        Liczba przedziałów <strong>k</strong>=sqrt(n)=sqrt({{this.N}}) = {{this.k}}
+      </div>
+      <div>
+        Długość przedziału <strong>h</strong>=({{this.max}} - {{this.min}})/{{this.k}} = {{this.h}}
+      </div>
+    </section>
+    <section id="summary-table--container">
+      <div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Przedziały</th>
+              <th scope="col">Elementów w przedziale</th>
+              <th scope="col">Częstotliwość</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let elem of histogram">
+              <td>{{elem.borders}}</td>
+              <td>{{elem.qty}}</td>
+              <td>{{elem.frequency}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+    <section id="histogram-canvas--container">
+      <button (click)="drawN()" type="button" class="btn btn-info">histogram ilościowy</button>
+      <button (click)="drawF()" type="button" class="btn btn-primary">histogram częstotliwości</button>
+      <div id="chartContainer" style="width: 100%; height: 400px;"></div>
+    </section>
+  </section>
+
+</div>

@@ -1,0 +1,122 @@
+<div class="jumbotron">
+  <section id="form-controller--container">
+    <button 
+      *ngIf="!this.isFormVisible"
+      (click)="this.isFormVisible = !isFormVisible" 
+      class="btn btn-primary">Zmień dane</button>
+    <button 
+      (click)="this.destroyData()" 
+      class="btn btn-warning">Wyczyść dane</button>
+  </section>
+  <section *ngIf="this.isFormVisible">
+    <form [formGroup]="form">
+      <div class="form-group">
+          <label for="data"><strong>Data</strong></label>
+          <textarea
+              [(ngModel)]="_data"
+              formControlName="data"
+              id="data"
+              type="text"
+              placeholder="2.1, 5.3, 1.8..."
+              class="form-control"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="powNormal">Rząd momentu zwykłego</label>
+        <input 
+          formControlName="powNormal"
+          class="form-control"
+          [(ngModel)]="powNormal"
+          placeholder="1"
+          type="number"
+          id="powNormal">
+      </div>
+      <div class="form-group">
+        <label for="powCentral">Rząd momentu centralnego</label>
+        <input 
+          formControlName="powCentral"
+          class="form-control"
+          [(ngModel)]="powCentral"
+          placeholder="1"
+          type="number"
+          id="powCentral">
+      </div>
+      <button 
+      (keyUp.enter)="setData()"
+      (click)="setData()" 
+      class="btn btn-success" type="submit">Ok</button>
+    </form>
+  </section>
+  <section *ngIf="this.N">
+    <div>
+      <div><span>Dane sortowane:</span></div>
+      <span *ngFor="let n of this.data">
+        <span>{{n}}, </span>
+      </span>
+    </div>
+    <div>
+      <span>N = {{this.N}}</span>
+    </div>
+    <div class="alert alert-secondary">
+      <span>Moment zwykły rzędu <strong>{{this.powNormal}}</strong></span>
+      <div>
+        <span>(1/{{this.N}}) &Sigma; (</span>
+        <span *ngFor="let n of this.data; let last = last">
+          <span>({{n}}) <span class="pow">{{this.powNormal}}</span></span>
+          <span *ngIf="!last">,  </span>
+        </span>
+        <span>)</span>
+        <div>
+          M = {{this.normalMoment}}
+        </div>
+      </div>
+    </div>
+
+    <div class="alert alert-secondary">
+      <span>Moment centralny rzędu <strong>{{this.powCentral}}</strong></span>
+      <div>
+        <span>(1/{{this.N}}) &Sigma; (</span>
+        <span *ngFor="let n of this.data; let last = last">
+          <span>({{n}} - {{this.mean}}) <span class="pow">{{this.powCentral}}</span></span>
+          <span *ngIf="!last">,  </span>
+        </span>
+        <span>)</span>
+        <div>
+          M = {{this.centralMoment}}
+        </div>
+      </div>
+    </div>
+
+    <div class="alert alert-secondary">
+      <span>Mediana </span>
+      <figure>
+        <img src="assets/img/mediana.png" />
+      </figure>
+      <div>
+        <span>n = {{this.N}} </span>
+      </div>
+      <div>
+        Me(X<span class="bottom-prefix">1</span>, ... X<span class="bottom-prefix">n</span>) = {{this.Me}}
+      </div>
+    </div>
+
+    <div class="alert alert-secondary">
+      <span>Kwartyl rzędu 1/4</span>
+      <div>
+        <figure>
+          <img src="assets/img/kwartyl.png" />
+        </figure>
+        <span>X[{{this.N}}* 1/4] X[{{this.N*0.25}}] = {{this.kwartyl_1_4}}</span>
+      </div>
+    </div>
+
+    <div class="alert alert-secondary">
+      <span>Kwartyl rzędu 1/4</span>
+      <div>
+        <figure>
+          <img src="assets/img/kwartyl.png" />
+        </figure>
+        <span>X[{{this.N}}* 3/4] = X[{{this.N*0.75}}] = {{this.kwartyl_3_4}}</span>
+      </div>
+    </div>
+  </section>
+</div>

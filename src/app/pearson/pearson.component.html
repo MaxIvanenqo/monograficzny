@@ -1,0 +1,107 @@
+<div class="jumbotron">
+  <section id="form-controller--container">
+    <button 
+      *ngIf="!this.isFormVisible"
+      (click)="this.isFormVisible = !isFormVisible" 
+      class="btn btn-primary">Zmień dane</button>
+    <button 
+      (click)="this.destroyData()" 
+      class="btn btn-warning">Wyczyść dane</button>
+  </section>
+  <section *ngIf="this.isFormVisible">
+    <form [formGroup]="form">
+      <div class="form-group">
+        <label for="powNormal">Xi</label>
+        <input 
+          formControlName="xi"
+          class="form-control"
+          [(ngModel)]="_xi"
+          placeholder="xi"
+          type="text"
+          id="xi">
+      </div>
+      <div class="form-group">
+        <label for="yi">Yi</label>
+        <input 
+          formControlName="yi"
+          class="form-control"
+          [(ngModel)]="_yi"
+          placeholder="yi"
+          type="text"
+          id="y1">
+      </div>
+      <button 
+      (keyUp.enter)="setData()"
+      (click)="setData()" 
+      class="btn btn-success" type="submit">Ok</button>
+    </form>
+  </section>
+  <section>
+    <div>
+      <figure>
+        <img src="assets/img/pearson.png" />
+      </figure>
+    </div>
+    <div>
+      <figure>
+        <img src="assets/img/pearson1.png" />
+      </figure>
+    </div>
+    <div>
+      <figure>
+        <img src="assets/img/xiyipearson.png" />
+        <figcaption class="figcaption-inline">
+          <span>
+            &Sigma;(x<span class="bottom-prefix">i</span>*y<span class="bottom-prefix">i</span>) = 
+            <span *ngFor="let i of xy">
+              <span>({{i.x}} * {{i.y}}) + </span>
+            </span>
+            <span> = {{this.u1}}</span>
+          </span>
+        </figcaption>
+      </figure>
+      <figure>
+        <img src="assets/img/pearson_u2.png" />
+        <figcaption class="figcaption-inline">
+          <span>
+            n* <span class="mean">x</span>*<span class="mean">y</span> = {{this.N}}*{{this.meanX}}*{{this.meanY}} = {{this.u2}}
+          </span>
+        </figcaption>
+      </figure>
+      <figure>
+        <img src="assets/img/pearson_b1.png" />
+        <figcaption class="figcaption-inline">
+          <span>
+            &#x221A; ( &Sigma;(x<span class="bottom-prefix">i</span> - <span class="mean">x</span>) ) = &#x221A; (
+            <span *ngFor="let i of xy">
+              <span>({{i.x}} - {{this.meanX}}) <span class="pow">2</span> + </span>
+            </span>)
+          </span>
+          = <span>{{this.b1}}</span>
+        </figcaption>
+      </figure>
+      <figure>
+        <img src="assets/img/pearson_b2.png" />
+        <figcaption class="figcaption-inline">
+          <span>
+            &#x221A; ( &Sigma;(y<span class="bottom-prefix">i</span> - <span class="mean">y</span>) ) = &#x221A; (
+            <span *ngFor="let i of xy">
+              <span>({{i.y}} - {{this.meanY}}) <span class="pow">2</span> + </span>
+            </span>)
+          </span>
+          = <span>{{this.b2}}</span>
+        </figcaption>
+      </figure>
+      <figure>
+        <img src="assets/img/pearson_3.png">
+        <figcaption class="badge badge-primary">
+          <span> R = ({{this.u1}} - {{this.u2}}) / ({{this.b1}} * {{this.b2}})</span> = <span>{{this.R}}</span>
+        </figcaption>
+      </figure>
+    </div>
+    <div>
+      <button class="btn btn-primary" (click)="draw()" type="button">Draw</button>
+      <canvas #canvasEl width="600" height="400"></canvas>
+    </div>
+  </section>
+</div>

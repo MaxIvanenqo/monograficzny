@@ -1,0 +1,99 @@
+<div class="jumbotron">
+  <section id="form-controller--container">
+    <button 
+      *ngIf="!this.isFormVisible"
+      (click)="this.isFormVisible = !isFormVisible" 
+      class="btn btn-primary">Zmień dane</button>
+    <button 
+      (click)="this.destroyData()" 
+      class="btn btn-warning">Wyczyść dane</button>
+  </section>
+  <section *ngIf="this.isFormVisible">
+    <form [formGroup]="form">
+      <div class="form-group">
+          <label for="data"><strong>Data</strong></label>
+          <textarea
+              [(ngModel)]="_data"
+              formControlName="data"
+              id="data"
+              type="text"
+              placeholder="2.1, 5.3, 1.8..."
+              class="form-control"></textarea>
+      </div>
+      <button 
+      (keyUp.enter)="setData()"
+      (click)="setData()" 
+      class="btn btn-success" type="submit">Ok</button>
+    </form>
+  </section>
+  <section *ngIf="this.data">
+    <section id="data--group">
+      <div id="sorted-data--container">
+        <span *ngFor="let d of data; let i = index"  id="sorted-data">{{d}} | </span>
+      </div>
+    </section>
+  </section>
+  <section *ngIf="this.dystrybuanta">
+    <div>
+      <table class="table">
+        <tbody>
+          <tr *ngFor="let elem of this.dystrybuanta; index as i; let first = first; let last = last">
+            <td *ngIf="!first && !last">{{elem.frequency}} /{{this.data.length}}</td>
+            <td *ngIf="first">0</td>
+            <td *ngIf="last">1</td>
+            <td>{{elem.prev}} &lt;= u &lt; {{elem.val}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <button (click)="draw()" type="button" class="btn btn-info">Draw</button>
+      <div>
+        <canvas #canvasEl width="600px" height="400px"></canvas>
+      </div>
+      <div>
+        <table class="table">
+          <tbody>
+            <tr>
+              <td>f(x) = 1 / (b-a) x &isin; &lt;a,b&gt;</td>
+            </tr>
+            <tr>
+              <td>f(x) = 0 x &notin; &lt;a,b&gt;</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <table class="table">
+          <tbody>
+            <tr>
+              <td>F(x) = 0, x &gt;</td>
+            </tr>
+            <tr>
+              <td>F(x) = (x-a)/(b-a), x &isin; &lt;a, b)</td>
+            </tr>
+            <tr>
+              <td>F(x) = 1, x &gt;= b</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div>
+        <table class="table">
+          <tbody>
+            <tr>
+              <td>0 x &lt; {{this.min}}</td>
+            </tr>
+            <tr>
+              <td>(x - {{this.min}})/{{this.max -  this.min}}, x &isin; &lt;a, b)</td>
+            </tr>
+            <tr>
+              <td>1 x &gt;= {{this.max}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</div>

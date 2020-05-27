@@ -1,0 +1,98 @@
+<div class="jumbotron">
+  <section id="form-controller--container">
+    <button 
+      *ngIf="!this.isFormVisible"
+      (click)="this.isFormVisible = !isFormVisible" 
+      class="btn btn-primary">Zmień dane</button>
+    <button 
+      (click)="this.destroyData()" 
+      class="btn btn-warning">Wyczyść dane</button>
+  </section>
+  <section *ngIf="this.isFormVisible">
+    <form [formGroup]="form">
+      <div class="form-group">
+          <label for="data"><strong>Data</strong></label>
+          <textarea
+              [(ngModel)]="_data"
+              formControlName="data"
+              id="data"
+              type="text"
+              placeholder="2.1, 5.3, 1.8..."
+              class="form-control"></textarea>
+      </div>
+      <button 
+      (keyUp.enter)="setData()"
+      (click)="setData()" 
+      class="btn btn-success" type="submit">Ok</button>
+    </form>
+  </section>
+  <section *ngIf="this.W">
+    <div>
+      <span *ngFor="let item of this.data">
+        <span>{{item}}, </span>
+      </span>
+    </div>
+    <div>
+      <span>N = {{this.N}}</span>
+    </div>
+    <div>
+      <figure>
+        <img src="assets/img/xmean.png" />
+      </figure>
+      <span> <span class="mean">x</span> 1/{{this.N}} * (</span>
+      <span *ngFor="let item of this.data">
+        <span>{{item}} + </span>
+      </span>
+      ) = {{this.mean}}
+    </div>
+    <div>
+      <figure>
+        <img src="assets/img/deviation.png" />
+      </figure>
+      <span>S = {{this.S}}</span>
+      <span> &#x221A;(1/{{this.N-2}}) * (</span>
+      <span *ngFor="let item of this.data">
+        <span>({{item}} - {{this.mean}} <span class="pow">2</span> + </span>
+      </span>
+      ) = {{this.S}}
+    </div>
+    <div>
+      <span>S<span class="pow">2</span> = {{this.S*this.S}} </span>
+    </div>
+    <div>
+      <figure>
+        <img src="assets/img/an_shapiro.png">
+      </figure>
+    </div>
+    <div>
+      <table class="table w-auto">
+        <thead>
+          <th>i</th>
+          <th>X <span class="bottom-prefix">n-i+1</span> - X<span class="bottom-prefix">i</span> </th>
+          <th>a <span class="bottom-prefix">i:n</span></th>
+          <th>a <span class="bottom-prefix">i:n</span> * (X <span class="bottom-prefix">n-i+1</span> - X<span class="bottom-prefix">i</span>) </th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of this.XX; let index = index">
+            <td>{{index+1}}</td>
+            <td>{{item.str}} = {{item.val}}</td>
+            <td>{{item.a}}</td>
+            <td>{{item.val_a}}</td>
+          </tr>
+          <tr><td></td><td></td><td></td><td> &Sigma; = {{this.sum1}}</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <figure>
+        <img src="assets/img/wkr_shapiro.png" />
+      </figure>
+      W = {{this.sum2}}/{{this.varX}} = {{this.sum2/this.varX}}
+    </div>
+    <div>
+      <figure>
+        <img src="assets/img/wartoscikrytyczne_shapiro.png" />
+      </figure>
+    </div>
+  </section>
+</div>

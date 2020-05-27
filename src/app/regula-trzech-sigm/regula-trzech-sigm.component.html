@@ -1,0 +1,60 @@
+<div class="jumbotron">
+  <h1>Reguła 3 sigm</h1>
+  <section *ngIf="this.isFormVisible">
+    <form [formGroup]="form">
+      <div class="form-group">
+          <label for="data"><strong>Dane</strong></label>
+          <textarea
+              [(ngModel)]="_data"
+              formControlName="data"
+              id="data"
+              type="text"
+              placeholder="2.1, 5.3, 1.8..."
+              class="form-control"></textarea>
+      </div>
+      <button 
+      (keyUp.enter)="setData()"
+      (click)="setData()" 
+      class="btn btn-success" type="submit">Ok</button>
+    </form>
+  </section>
+  <section *ngIf="this.data">
+    <section id="data--group">
+      <div id="sorted-data--container">
+        <span *ngFor="let d of data; let i = index"  id="sorted-data">{{d}}, </span>
+      </div>
+    </section>
+    <div>
+      <span>Podejrzany: {{this.suspicious}}</span>
+    </div>
+    <section>
+      <div>
+        <span>
+          &sigma; = {{this.sigma}} (bez uwzgłędnienia puntku wątpliwego)
+        </span>
+      </div>
+      <div>
+        <span>
+          Przedział min = {{this.minLimit}}
+        </span>
+      </div>
+      <div>
+        <span>
+          Przedział max = {{this.maxLimit}}
+        </span>
+      </div>
+      <div>
+        <table class="table">
+          <tr *ngFor="let elem of data">
+            <td [className]="elem>maxLimit || elem<minLimit ? 'higlighted-red':''">{{elem}}</td>
+          </tr>
+        </table>
+      </div>
+    </section>
+    <section *ngIf="calculated">
+      <h4>Hipoteza:</h4>
+      <p *ngIf="isMonolitic" class="alert alert-success" >Nie ma odstających w zbiorze danych</p>
+      <p *ngIf="!isMonolitic" class="alert alert-warning">Odstający: {{this.suspicious}}</p>
+    </section>
+  </section>
+</div>
