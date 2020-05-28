@@ -1,3 +1,6 @@
+import { element } from 'protractor';
+import { Sums } from './sums';
+import { t_student_0d1_0d05_0d01_q_1_30 } from './consts';
 import { Pearson } from './../models/pearson/pearson';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
@@ -7,6 +10,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
   templateUrl: './pearson.component.html',
   styleUrls: ['./pearson.component.css']
 })
+
 export class PearsonComponent implements OnInit {
   @ViewChild("canvasEl") canvasEl:ElementRef<HTMLCanvasElement>;
   public ctx;
@@ -26,20 +30,38 @@ export class PearsonComponent implements OnInit {
   public b2:number;
   public u:number;
   public b:number;
+  public t_student_showed:boolean;
+  public consts:Array<any>;
+  public T:number;
+  public _alpha:number;
+  public summary:Sums;
+  public xym:number;
+  public t:number;
+  public calculated:boolean;
+  public alphaArr:Array<number>;
   constructor() { 
     this.isFormVisible = true;
     this.xy = new Array();
+    this.consts = t_student_0d1_0d05_0d01_q_1_30;
+    this._alpha = 1;
+    this.t_student_showed = false;
+    this.calculated = false;
+    this.xym = 0;
+    this.alphaArr = [0.1, 0.05, 0.01];
   }
 
   public form = new FormGroup({
     xi: new FormControl(),
-    yi: new FormControl()
+    yi: new FormControl(),
+    alpha: new FormControl()
   })
 
   public setData():void{
     this.xi = this._xi.replace(" ", "").split(",").map(x=>+x);
     this.yi = this._yi.replace(" ", "").split(",").map(y=>+y);
     this.N = this.xi.length;
+
+    this.T = this.consts[this._alpha-1].arr[this.N-3];
 
     for(let i = 0; i < this.N; ++i){
       this.xy.push(new Pearson(this.xi[i], this.yi[i]));
@@ -48,29 +70,36 @@ export class PearsonComponent implements OnInit {
     this.meanX = +(this.xi.reduce((a,b)=>a+b)/this.N).toFixed(1);
     this.meanY = +(this.yi.reduce((a,b)=>a+b)/this.N).toFixed(1);
 
-    this.u1 = 0;
-    for(let i = 0; i < this.N; ++i){
-      this.u1 += (this.xi[i] * this.yi[i]);
-    }
-    this.u1 = +this.u1.toFixed(1);
-    this.u2 = +(this.N * this.meanX * this.meanY).toFixed(1);
-    this.b1 = 0;
-    this.xi.forEach(element => {
-      this.b1 += Math.pow(element - this.meanX, 2);
-    });
-    this.b1 = +Math.sqrt(this.b1).toFixed(1);
+    Pearson.setXmean(this.meanX);
+    Pearson.setYmean(this.meanY);
 
-    this.b2 = 0;
-    this.yi.forEach(element => {
-      this.b2 += Math.pow(element - this.meanX, 2);
-    });
-    this.b2 = +Math.sqrt(this.b2).toFixed(1);
+    let xsum = 0;
+    let ysum = 0;
+    let xMeanSum = 0;
+    let yMeanSum = 0;
+    let xMeanSum2 = 0;
+    let yMeanSum2 = 0;
+    let xXmeanyYmeanSum = 0;
 
-    this.u = +(this.u1 - this.u2).toFixed(1);
-    this.b = +(this.b1 * this.b2).toFixed(1);
-   
-    this.R = this.u/this.b;
+    this.xy.forEach(element=>{
+      xsum += element.x;
+      ysum += element.y;
+      xMeanSum += element.x_xmean;
+      yMeanSum += element.y_ymean;
+      xMeanSum2 += element.x_xmean_pow2;
+      yMeanSum2 += element.y_ymean_pow2;
+      xXmeanyYmeanSum += element.x_xmean_m_y_ymean;
 
+      this.xym += (element.x_xmean*element.y_ymean)
+    })
+
+    this.xym = +this.xym.toFixed(2);
+
+    this.summary = new Sums(+xsum.toFixed(2),+ysum.toFixed(2), +xMeanSum.toFixed(2), +yMeanSum.toFixed(2), +xMeanSum2.toFixed(2), +yMeanSum2.toFixed(2), +xXmeanyYmeanSum.toFixed(2));
+
+    this.R = this.xym/(Math.sqrt(xMeanSum2) * Math.sqrt(yMeanSum2));
+    this.t = (this.R/Math.sqrt(1-Math.pow(this.R,2)))*Math.sqrt(this.N-2);
+    this.calculated = true;
   }
 
   public draw(){

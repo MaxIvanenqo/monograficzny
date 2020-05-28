@@ -18,7 +18,7 @@
           [(ngModel)]="_xi"
           placeholder="xi"
           type="text"
-          id="xi">
+          id="xi" />
       </div>
       <div class="form-group">
         <label for="yi">Yi</label>
@@ -28,7 +28,21 @@
           [(ngModel)]="_yi"
           placeholder="yi"
           type="text"
-          id="y1">
+          id="y1" />
+      </div>
+      <div class="form-group">
+        <label for="alpha">Aplha</label>
+        <select
+          formControlName="alpha"
+          class="form-control"
+          [(ngModel)]="_alpha"
+          placeholder="alpha"
+          type="text"
+          id="alpha">>
+          <option value="1">0.1</option>
+          <option value="2">0.05</option>
+          <option value="3">0.01</option>
+        </select>
       </div>
       <button 
       (keyUp.enter)="setData()"
@@ -36,72 +50,142 @@
       class="btn btn-success" type="submit">Ok</button>
     </form>
   </section>
-  <section>
-    <div>
+  <section *ngIf="this.calculated">
+    <div class="alert alert-secondary">
       <figure>
-        <img src="assets/img/pearson.png" />
+        <img src="assets/img/xmean_f.png" />
+      </figure>
+      <span class="mean">x</span> = {{this.meanX}}
+    </div>
+    <div class="alert alert-secondary">
+      <figure>
+        <img src="assets/img/ymean_f.png" />
+      </figure>
+      <span class="mean">y</span> = {{this.meanY}}
+    </div>
+    <div class="alert alert-secondary">
+      <button (click)="t_student_showed=!t_student_showed" class="btn btn-info">Toggle t-student table</button>
+      <table *ngIf="this.t_student_showed" class="table table-bordered w-auto">
+        <thead class="text-center">
+          <th>0.1</th>
+          <th>0.05</th>
+          <th>0.01</th>
+        </thead>
+        <td *ngFor="let row of consts" [className]="row.n==this._alpha?'highlighted':''">
+          <tr *ngFor="let item of row.arr; let index = index" [className]="row.n==this._alpha&&index+1==this.N-2?'cross-bg':''">
+            <td>{{index+1}}</td>
+            <td>{{item}}</td>
+          </tr>
+        </td>
+      </table>
+      <div>
+        <span>t <span class="bottom-prefix">&alpha;, v</span> = {{this.T}}</span>
+      </div>
+      <div>
+        Stopni swobody v = {{this.N-2}}
+      </div>
+    </div>
+
+
+    <div class="alert alert-secondary">
+      <div>
+        <table class="table table-bordered w-auto">
+          <tr class="border-special-color">
+            <td><span>x<span class="bottom-prefix">i</span> </span></td>
+            <td><span>y<span class="bottom-prefix">i</span> </span></td>
+            <td><span>x<span class="bottom-prefix">i</span> - <span class="mean">x</span></span></td>
+            <td><span>y<span class="bottom-prefix">i</span> - <span class="mean">y</span></span></td>
+            <td>(<span>x<span class="bottom-prefix">i</span> - <span class="mean">x</span></span>)<span class="pow">2</span> </td>
+            <td>(<span>y<span class="bottom-prefix">i</span> - <span class="mean">y</span></span>)<span class="pow">2</span> </td>
+            <td>(<span>x<span class="bottom-prefix">i</span> - <span class="mean">x</span></span>)(<span>y<span class="bottom-prefix">i</span> - <span class="mean">y</span></span>)</td>
+          </tr>
+          <tr *ngFor="let item of this.xy">
+            <td>{{item.x}}</td>
+            <td>{{item.y}}</td>
+            <td>{{item.x_xmean}}</td>
+            <td>{{item.y_ymean}}</td>
+            <td>{{item.x_xmean_pow2}}</td>
+            <td>{{item.y_ymean_pow2}}</td>
+            <td>{{item.x_xmean_m_y_ymean}}</td>
+          </tr>
+          <tr>
+            <td>{{summary.xSum}}</td>
+            <td>{{summary.ySum}}</td>
+            <td>{{summary.xMeanSum}}</td>
+            <td>{{summary.yMeanSum}}</td>
+            <td>{{summary.xMeanSum2}}</td>
+            <td>{{summary.yMeanSum2}}</td>
+            <td>{{summary.xXmeanyYmeanSum}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+
+
+    <div class="alert alert-secondary">
+      <figure>
+        <img src="assets/img/r_pearson.png" />
       </figure>
     </div>
     <div>
-      <figure>
-        <img src="assets/img/pearson1.png" />
-      </figure>
+      <span>r = {{this.xym}}/(&#x221A;({{this.summary.xMeanSum2}})</span>&#x221A;({{this.summary.yMeanSum2}})) = {{this.R}}
     </div>
-    <div>
+    
+
+
+    <div class="alert alert-secondary">
+      <h5>1 Sposob</h5>
+      <span>Statystyka testowa</span>
       <figure>
-        <img src="assets/img/xiyipearson.png" />
-        <figcaption class="figcaption-inline">
-          <span>
-            &Sigma;(x<span class="bottom-prefix">i</span>*y<span class="bottom-prefix">i</span>) = 
-            <span *ngFor="let i of xy">
-              <span>({{i.x}} * {{i.y}}) + </span>
-            </span>
-            <span> = {{this.u1}}</span>
-          </span>
-        </figcaption>
+        <img src="assets/img/t_pearson.png" />
       </figure>
-      <figure>
-        <img src="assets/img/pearson_u2.png" />
-        <figcaption class="figcaption-inline">
-          <span>
-            n* <span class="mean">x</span>*<span class="mean">y</span> = {{this.N}}*{{this.meanX}}*{{this.meanY}} = {{this.u2}}
-          </span>
-        </figcaption>
-      </figure>
-      <figure>
-        <img src="assets/img/pearson_b1.png" />
-        <figcaption class="figcaption-inline">
-          <span>
-            &#x221A; ( &Sigma;(x<span class="bottom-prefix">i</span> - <span class="mean">x</span>) ) = &#x221A; (
-            <span *ngFor="let i of xy">
-              <span>({{i.x}} - {{this.meanX}}) <span class="pow">2</span> + </span>
-            </span>)
-          </span>
-          = <span>{{this.b1}}</span>
-        </figcaption>
-      </figure>
-      <figure>
-        <img src="assets/img/pearson_b2.png" />
-        <figcaption class="figcaption-inline">
-          <span>
-            &#x221A; ( &Sigma;(y<span class="bottom-prefix">i</span> - <span class="mean">y</span>) ) = &#x221A; (
-            <span *ngFor="let i of xy">
-              <span>({{i.y}} - {{this.meanY}}) <span class="pow">2</span> + </span>
-            </span>)
-          </span>
-          = <span>{{this.b2}}</span>
-        </figcaption>
-      </figure>
-      <figure>
-        <img src="assets/img/pearson_3.png">
-        <figcaption class="badge badge-primary">
-          <span> R = ({{this.u1}} - {{this.u2}}) / ({{this.b1}} * {{this.b2}})</span> = <span>{{this.R}}</span>
-        </figcaption>
-      </figure>
+
+      <div>
+        <span>t <span class="bottom-prefix">emp</span> = {{this.t}}</span>
+      </div>
+
+      <div>
+        <span>
+          <span>t <span class="bottom-prefix">&alpha;, v</span> = {{this.T}}</span>
+        </span>
+      </div>
+      <div>
+        <span>Obszar krytyczny: (-&#8734; ; -{{this.T}} &gt; u &lt; {{this.T}} ; +&#8734;)</span>
+      </div>
+
+      <div>
+          <span>t <span class="bottom-prefix">emp</span> = {{this.t}} </span>
+      </div>
+
+      <div>
+        <div class="alert alert-success" *ngIf="this.t<this.T">nie należy do obszaru krytycznego. Nie ma podstaw do odrzucenia hipotezy H <span class="bottom-prefix">0</span> </div>
+        <div class="alert alert-danger" *ngIf="this.t>=this.T">należy do obszaru krytycznego. Istnieją podstawy do odrzucenia hipotezy H <span class="bottom-prefix">0</span> </div>
+      </div>
     </div>
-    <div>
-      <button class="btn btn-primary" (click)="draw()" type="button">Draw</button>
-      <canvas #canvasEl width="600" height="400"></canvas>
+
+
+    <div class="alert alert-secondary">
+      <h5>2 Sposob</h5>
+      <span>Statystyka testowa</span>
+      <figure>
+        <img src="assets/img/pearson_wk.png" />
+      </figure>
+      <div>
+        r(&alpha;, n)
+      </div>
+      {{this.R}} &gt; ? -> odrzucamy H <span class="bottom-prefix">0</span>
+    </div>
+    
+    
+    
+    <div class="alert alert-secondary">
+      <div>
+        <button class="btn btn-primary" (click)="draw()" type="button">Draw</button>
+      </div>
+      <div>
+        <canvas #canvasEl width="600" height="400"></canvas>
+      </div>
     </div>
   </section>
 </div>

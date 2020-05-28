@@ -5,7 +5,7 @@ body{
 .pow{
   position: relative;
   top: -10px;
-  left: -5px;
+  left: -2px;
   font-size: 10px;
 }
 
@@ -33,4 +33,21 @@ body{
 
 .figcaption-inline{
   display: inline;
+}
+
+.table .border-special-color > td{
+  border-color: #000;
+}
+
+.highlighted{
+  background-color: rgb(251, 243, 119);
+}
+
+.cross{
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.cross-bg{
+  background-color: rgb(255, 104, 34);
 }
