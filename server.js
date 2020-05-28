@@ -8,7 +8,7 @@ const app = express();
 app.use(express.static(__dirname + '/dist/monograficzny'));
 
 app.get('/*', function(req,res) {
-    
+
 res.sendFile(path.join(__dirname+'/dist/monograficzny/index.html'));
 });
 

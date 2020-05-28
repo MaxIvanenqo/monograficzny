@@ -1,0 +1,99 @@
+<div class="jumbotron">
+  <section id="form-controller--container">
+    <button 
+      *ngIf="!this.isFormVisible"
+      (click)="this.isFormVisible = !isFormVisible" 
+      class="btn btn-primary">Zmień dane</button>
+    <button 
+      (click)="this.destroyData()" 
+      class="btn btn-warning">Wyczyść dane</button>
+  </section>
+  <section *ngIf="this.isFormVisible">
+    <form [formGroup]="form">
+      <div class="form-group">
+        <label for="data">Dane</label>
+        <input 
+          formControlName="data"
+          class="form-control"
+          [(ngModel)]="_data"
+          placeholder="dane"
+          type="text"
+          id="data">
+      </div>
+      <div class="form-group">
+        <label for="grayScale">Skala szarości</label>
+        <input 
+          formControlName="grayScale"
+          class="form-control"
+          [(ngModel)]="grayScale"
+          placeholder="15"
+          type="number"
+          id="grayScale">
+      </div>
+      <button 
+      (keyUp.enter)="setData()"
+      (click)="setData()" 
+      class="btn btn-success" type="submit">Ok</button>
+    </form>
+  </section>
+  <section *ngIf="this.calculated">
+    <div>
+      <table class="table table-bordered w-auto">
+        <tr *ngFor="let row of data">
+          <td *ngFor="let item of row">
+            {{item}}
+          </td>
+        </tr>
+      </table>
+      <div class="alert alert-secondary">
+        <div>
+          <span>E = {{this.grayScale}}</span>
+        </div>
+        <div>
+          <span>X <span class="bottom-prefix">(max) </span>= X<span class="bottom-prefix">({{this.maxInadex}}) </span>= </span>
+          <span>{{this.max}}</span>
+        </div>
+        <div>
+          <span>X <span class="bottom-prefix">(min) </span>= X<span class="bottom-prefix">({{this.minIndex}}) </span>= </span>
+          <span>{{this.min}}</span>
+        </div>
+        <div>
+          <span>X<span class="bottom-prefix">({{this.maxInadex}}) </span>- </span><span>X<span class="bottom-prefix">({{this.minIndex}}) </span>= </span><span>{{this.delta}}</span>
+        </div>
+      </div>
+      <div>
+        <button class="btn btn-primary" (click)="draw1()">draw1</button>
+        <div>
+          <canvas width="600" height="400" #histogram1></canvas>
+        </div>
+      </div>
+
+      <div class="alert alert-secondary">
+        <figure>
+          <img src="assets/img/rozszerzenie1.png" />
+        </figure>
+        <div>
+          <span>Y <span class="bottom-prefix">ij </span> = ({{this.grayScale}}/({{this.max}} - {{this.min}})) * (X<span class="bottom-prefix">ij</span> - {{this.min}})</span>
+        </div>
+        <div>
+          <span>Y <span class="bottom-prefix">ij </span> = ({{this.grayScale/(this.max - this.min)}}) * (X<span class="bottom-prefix">ij</span> - {{this.min}})</span>
+        </div>
+      </div>
+
+      <div>
+        <span>Macierz jasności</span>
+        <div>
+          <table class="table table-bordered w-auto">
+            <tr *ngFor="let row of this.Y">
+              <td *ngFor="let yij of row">{{yij}}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div>
+        <button (click)="draw2()" class="btn btn-success" type="button">draw2</button>
+        <canvas width="600" height="400" #histogram2></canvas>
+      </div>
+    </div>
+  </section>
+</div>

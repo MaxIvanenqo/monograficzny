@@ -125,5 +125,8 @@
       }
     }
   },
-  "defaultProject": "zadania"
+  "defaultProject": "zadania",
+  "cli": {
+    "analytics": "2389920c-b8ea-45cc-8d24-9a4277eaace1"
+  }
 }

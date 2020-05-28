@@ -19,6 +19,7 @@ import { MomentCentralnyZwyklyKwantylComponent } from './moment-centralny-zwykly
 import { PearsonComponent } from './pearson/pearson.component';
 import { ShapiroWilkaComponent } from './shapiro-wilka/shapiro-wilka.component';
 import { KolmogorowComponent } from './kolmogorow/kolmogorow.component';
+import { RozszerzenieZakresuHistogramuComponent } from './rozszerzenie-zakresu-histogramu/rozszerzenie-zakresu-histogramu.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { KolmogorowComponent } from './kolmogorow/kolmogorow.component';
     MomentCentralnyZwyklyKwantylComponent,
     PearsonComponent,
     ShapiroWilkaComponent,
-    KolmogorowComponent
+    KolmogorowComponent,
+    RozszerzenieZakresuHistogramuComponent
   ],
   imports: [
     BrowserModule,

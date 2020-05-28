@@ -1,3 +1,4 @@
+import { RozszerzenieZakresuHistogramuComponent } from './rozszerzenie-zakresu-histogramu/rozszerzenie-zakresu-histogramu.component';
 import { KolmogorowComponent } from './kolmogorow/kolmogorow.component';
 import { ShapiroWilkaComponent } from './shapiro-wilka/shapiro-wilka.component';
 import { PearsonComponent } from './pearson/pearson.component';
@@ -15,6 +16,7 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
   {path: 'dystrybuanta_empiryczna', component: DystrybuantaEmpirycznaComponent},
   {path: 'histogram', component: HistogramComponent},
+  {path: 'zakres_histogramu', component: RozszerzenieZakresuHistogramuComponent},
   {path: 'test_dixona', component: TestDixonaComponent},
   {path: 'test_grubbsa', component: TestGrubbsaComponent},
   {path: 'regula_3_sigm', component: RegulaTrzechSigmComponent},
