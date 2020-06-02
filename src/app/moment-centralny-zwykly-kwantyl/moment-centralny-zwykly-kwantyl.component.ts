@@ -19,6 +19,7 @@ export class MomentCentralnyZwyklyKwantylComponent implements OnInit {
   public Me:number;
   public kwartyl_1_4:number;
   public kwartyl_3_4:number;
+  public s:number;
   public form = new FormGroup({
     data: new FormControl(),
     powNormal: new FormControl(),

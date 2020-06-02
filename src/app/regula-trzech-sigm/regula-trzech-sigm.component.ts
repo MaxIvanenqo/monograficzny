@@ -26,12 +26,16 @@ export class RegulaTrzechSigmComponent implements OnInit {
     this.data = this._data.replace(" ", "").split(",").map(x=>+x);
     this.mean = this.data.reduce((a,b)=>a + b, 0)/this.data.length;
     this.removeSuspicious();
+    console.log( this.mean);
     this.mean = this.dataWithoutSuspisious.reduce((a,b)=>a + b, 0)/this.dataWithoutSuspisious.length;
+    console.log(this.dataWithoutSuspisious, this.mean);
     let x2 = 0;
     this.dataWithoutSuspisious.forEach(element => {
       x2 += Math.pow(element - this.mean, 2);
     });
-    this.sigma = Math.sqrt(x2/this.dataWithoutSuspisious.length);
+    console.log("ee", x2);
+    let o = 1/(this.dataWithoutSuspisious.length-1);
+    this.sigma = Math.sqrt(o*x2);
     this.maxLimit = 3*this.sigma + this.mean;
     this.minLimit = this.mean - 3*this.sigma;
     this.calculated = true;
