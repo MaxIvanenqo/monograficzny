@@ -39,7 +39,7 @@ export class ShapiroWilkaComponent implements OnInit {
       e += Math.pow(element - this.mean, 2);
     })
     this.S = +Math.sqrt(e/(this.N-1)).toFixed(2);
-    this.varX = +(e/(this.N-1)).toFixed(2);
+    this.varX = e;
     let q = 0;
     let n = this.N/2;
     if (n%2!==0) n = (this.N-1)/2

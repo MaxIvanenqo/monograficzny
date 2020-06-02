@@ -11,8 +11,8 @@ pearson.href = "pearson";
 momentkwantyl.href = "moment";
 const shapiroWilka = new Nav("Test Shapiro-Wilka");
 shapiroWilka.href = "shapiro-wilka";
-const kolmogorow = new Nav("Test Kołmogorowa-Lillieforsa");
-kolmogorow.href = "kolmogorow";
+// const kolmogorow = new Nav("Test Kołmogorowa-Lillieforsa");
+// kolmogorow.href = "kolmogorow";
 const zakresHistogramu = new Nav("Rozszerzenie zakresu histogramu");
 zakresHistogramu.href = "zakres_histogramu";
 export const ARR = [
@@ -24,6 +24,6 @@ export const ARR = [
   momentkwantyl,
   pearson,
   shapiroWilka,
-  kolmogorow,
+  // kolmogorow,
   zakresHistogramu
 ]
