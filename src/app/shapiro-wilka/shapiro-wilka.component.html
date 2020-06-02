@@ -45,20 +45,8 @@
       </span>
       ) = {{this.mean}}
     </div>
-    <div>
-      <figure>
-        <img src="assets/img/deviation.png" />
-      </figure>
-      <span>S = {{this.S}}</span>
-      <span> &#x221A;(1/{{this.N-2}}) * (</span>
-      <span *ngFor="let item of this.data">
-        <span>({{item}} - {{this.mean}} <span class="pow">2</span> + </span>
-      </span>
-      ) = {{this.S}}
-    </div>
-    <div>
-      <span>S<span class="pow">2</span> = {{this.S*this.S}} </span>
-    </div>
+
+
     <div>
       <figure>
         <img src="assets/img/an_shapiro.png">
@@ -87,7 +75,7 @@
       <figure>
         <img src="assets/img/wkr_shapiro.png" />
       </figure>
-      W = {{this.sum2}}/{{this.varX}} = {{this.sum2/this.varX}}
+      W = ({{this.sum1}})<span class="pow">2</span>/{{this.varX}} = {{this.sum2}}/{{this.varX}} = {{this.sum2/this.varX}}
     </div>
     <div>
       <figure>

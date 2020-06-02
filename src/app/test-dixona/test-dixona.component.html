@@ -46,48 +46,52 @@
     </form>
   </section>
   <section *ngIf="this.data">
-    <section id="data--group">
-      <div id="sorted-data--container">
-        <span *ngFor="let d of data; let i = index"  id="sorted-data">{{d}}, </span>
-      </div>
+    <section>
+      <section id="data--group">
+        <div id="sorted-data--container">
+          <span *ngFor="let d of data; let i = index"  id="sorted-data">{{d}}, </span>
+        </div>
+      </section>
+    </section>
+    <section>
+     <table class="table w-auto was-validated">
+       <tbody>
+         <tr *ngFor="let item of q">
+           <td>{{item.q}}</td>
+           <td>{{item.val.toFixed(2)}} &lt; {{this.compareTo}}</td>
+         </tr>
+       </tbody>
+     </table>
+    </section>
+    <section>
+      <table class="table w-auto">
+        <thead>
+          <th>
+            <span>n</span>
+          </th>
+          <th *ngFor="let a of alpha">
+            <span>{{a}}</span>
+          </th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of dixonStandard" [className]="row.n === _N ? 'highlighted':''" >
+            <td>{{row.n}}</td>
+            <td [className]="pairValue.alpha == _alphaConst ? 'highlighted':''" *ngFor="let pairValue of row.pair">
+              <span [className]="pairValue.alpha == _alphaConst && row.n === _N ? 'cross':''" >{{pairValue.val}}</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    <section *ngIf="calculated">
+      <h4>Hipoteza:</h4>
+      <p *ngIf="isMonolitic" class="alert alert-success" >Nie ma odstających w zbiorze danych</p>
+      <p *ngIf="!isMonolitic" class="alert alert-warning">Istnieje przynajmniej jeden odstający w zbiorze danych</p>
     </section>
   </section>
-  <section>
-   <table class="table w-auto was-validated">
-     <tbody>
-       <tr *ngFor="let item of q">
-         <td>{{item.q}}</td>
-         <td>{{item.val.toFixed(2)}} &lt; {{this.compareTo}}</td>
-       </tr>
-     </tbody>
-   </table>
-  </section>
 
-  <section>
-    <table class="table w-auto">
-      <thead>
-        <th>
-          <span>n</span>
-        </th>
-        <th *ngFor="let a of alpha">
-          <span>{{a}}</span>
-        </th>
-      </thead>
-      <tbody>
-        <tr *ngFor="let row of dixonStandard" [className]="row.n === _N ? 'highlighted':''" >
-          <td>{{row.n}}</td>
-          <td [className]="pairValue.alpha == _alphaConst ? 'highlighted':''" *ngFor="let pairValue of row.pair">
-            <span [className]="pairValue.alpha == _alphaConst && row.n === _N ? 'cross':''" >{{pairValue.val}}</span>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </section>
-  <section *ngIf="calculated">
-    <h4>Hipoteza:</h4>
-    <p *ngIf="isMonolitic" class="alert alert-success" >Nie ma odstających w zbiorze danych</p>
-    <p *ngIf="!isMonolitic" class="alert alert-warning">Istnieje przynajmniej jeden odstający w zbiorze danych</p>
-  </section>
+
+ 
 
 
 </div>

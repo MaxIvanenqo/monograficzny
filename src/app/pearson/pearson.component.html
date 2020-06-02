@@ -1,12 +1,13 @@
 <div class="jumbotron">
+  <h1>Współczynnik korelacji</h1>
+  <figure>
+    <img src="assets/img/wspkor_0.png">
+  </figure>
   <section id="form-controller--container">
     <button 
       *ngIf="!this.isFormVisible"
       (click)="this.isFormVisible = !isFormVisible" 
       class="btn btn-primary">Zmień dane</button>
-    <button 
-      (click)="this.destroyData()" 
-      class="btn btn-warning">Wyczyść dane</button>
   </section>
   <section *ngIf="this.isFormVisible">
     <form [formGroup]="form">

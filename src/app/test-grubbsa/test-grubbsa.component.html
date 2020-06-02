@@ -39,61 +39,66 @@
       class="btn btn-success" type="submit">Ok</button>
     </form>
   </section>
-  <section *ngIf="this.data">
-    <section id="data--group">
-      <div id="sorted-data--container">
-        <span *ngFor="let d of data; let i = index"  id="sorted-data">{{d}}, </span>
+  <section *ngIf=this.calculated>
+    <section>
+      <section id="data--group">
+        <div id="sorted-data--container">
+          <span *ngFor="let d of data; let i = index"  id="sorted-data">{{d}}, </span>
+        </div>
+      </section>
+    </section>
+    <section>
+      <span>
+        N = {{this.data.length}} - 2 = {{this.data.length-2}};
+      </span>
+      <figure>
+        <img class="img-fluid" src="assets/img/t_student.png" alt="">
+      </figure>
+    </section>
+    <section>
+      <figure>
+        <img src="assets/img/grubbsG.png" alt="">
+      </figure>
+      <div>
+        <div>
+          <span>
+            s = {{this.S}}
+          </span>
+        </div>
+        <div>
+          <table class="table">
+            <tr *ngFor="let elem of Y1Ym; let index = index" [className]="elem.max?'highlighted':''">
+              <td>
+                <span>{{index+1}}</span>
+              </td>
+              <td>
+                <span>{{elem.Y1Ym}}/{{this.S}}</span>
+              </td>
+              <td>
+                <span>{{elem.val/this.S}}</span>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div>
+          <span>
+            G = {{this.Y1YmMax/this.S}}
+          </span>
+        </div>
+        <div>
+          <figure>
+            <img src="assets/img/gcr_0.png">
+          </figure>
+          <span>
+            Gc = {{this.G_crytical}}
+          </span>
+        </div>
       </div>
     </section>
-  </section>
-  <section>
-    <span>
-      N = {{this.data.length}} - 2 = {{this.data.length-2}};
-    </span>
-    <figure>
-      <img class="img-fluid" src="assets/img/t_student.png" alt="">
-    </figure>
-  </section>
-  <section>
-    <figure>
-      <img src="assets/img/grubbsG.png" alt="">
-    </figure>
-    <div>
-      <div>
-        <span>
-          s = {{this.S}}
-        </span>
-      </div>
-      <div>
-        <table class="table">
-          <tr *ngFor="let elem of Y1Ym; let index = index" [className]="elem.max?'highlighted':''">
-            <td>
-              <span>{{index+1}}</span>
-            </td>
-            <td>
-              <span>{{elem.Y1Ym}}/{{this.S}}</span>
-            </td>
-            <td>
-              <span>{{elem.val/this.S}}</span>
-            </td>
-          </tr>
-        </table>
-      </div>
-      <div>
-        <span>
-          G = {{this.Y1YmMax/this.S}}
-        </span>
-      </div>
-      <div>
-        <span>
-          Gc = {{this.G_crytical}}
-        </span>
-      </div>
-    </div>
-  </section>
-  <section *ngIf="calculated">
-    <h4>Hipoteza:</h4>
-    <p *ngIf="isMonolitic" class="alert alert-success" >Nie ma odstających w zbiorze danych</p>
-    <p *ngIf="!isMonolitic" class="alert alert-warning">Istnieje przynajmniej jeden odstający w zbiorze danych</p>
+    <section>
+      <h4>Hipoteza:</h4>
+      <p *ngIf="isMonolitic" class="alert alert-success" >Nie ma odstających w zbiorze danych</p>
+      <p *ngIf="!isMonolitic" class="alert alert-warning">Istnieje przynajmniej jeden odstający w zbiorze danych</p>
+    </section>
   </section>
 </div>

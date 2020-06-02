@@ -4,9 +4,6 @@
       *ngIf="!this.isFormVisible"
       (click)="this.isFormVisible = !isFormVisible" 
       class="btn btn-primary">Zmień dane</button>
-    <button 
-      (click)="this.destroyData()" 
-      class="btn btn-warning">Wyczyść dane</button>
   </section>
   <section *ngIf="this.isFormVisible">
     <form [formGroup]="form">
@@ -16,7 +13,7 @@
           formControlName="data"
           class="form-control"
           [(ngModel)]="_data"
-          placeholder="dane"
+          placeholder="1,4,6,8|7,5,3,2|6,2,7,9|0,5,2,7"
           type="text"
           id="data">
       </div>

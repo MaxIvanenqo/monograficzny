@@ -10,7 +10,7 @@ export class NavbarComponent implements OnInit {
   public navArr = ARR;
   public title:String;
   constructor() {
-    this.title = "Problem";
+    this.title = "Wybierz zadanie";
    }
 
   public changeTitle($event){
